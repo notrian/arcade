@@ -1,0 +1,2 @@
+https://site-assets.fontawesome.com/releases/v6.3.0/css/
+https://site-assets.fontawesome.com/releases/v6.3.0/webfonts/
