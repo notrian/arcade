@@ -45,6 +45,7 @@ h1 {
 }
 
 select {
+    cursor: pointer;
     background: var(--dark-background);
     color: var(--dark-text);
     padding: 6px 18px;
@@ -58,6 +59,7 @@ select {
 }
 
 .button {
+    cursor: pointer;
     display: flex;
     flex-direction: row;
     gap: 0.5rem;
