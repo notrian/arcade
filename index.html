@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Snake</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="./css/style.css">
 
     <!-- FontAwesomePro Icons -->
     <link href="assets/fontawesome/css/all.css" rel="stylesheet">
@@ -15,13 +15,31 @@
 </head>
 <body>
     <main>
+
         <h1>🐍</h1>
         <div class="row">
             <a href="play.html" class="button" id="play"><i class="fa-solid fa-play"></i>Play</a>
-            <a href="play.html" class="button"><i class="fa-solid fa-user"></i>Info</a>
+            <select name="theme" id="theme">
+                <option value="light">⬜</option>
+                <option value="light">🟥</option>
+                <option value="light">🟧</option>
+                <option value="light">🟨</option>
+                <option value="light">🟩</option>
+                <option value="light">🟦</option>
+                <option value="light">🟪</option>
+                <option value="light">🟫</option>
+                <option value="dark">⬛</option>
+            </select>
+            <!-- <a href="play.html" class="button"><i class="fa-solid fa-user"></i>Info</a> -->
         </div>
+        
+        <div id="game">
+            
+        </div>
+
+
     </main>
 
-    <script src="js/snake.js"></script>
+    <script src="./js/snake.js"></script>
 </body>
 </html>

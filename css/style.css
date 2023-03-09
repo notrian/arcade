@@ -1,4 +1,15 @@
 
+:root {
+    --light-background: #1a1a1a;
+    --dark-background: #151515;
+    --background: #252525;
+    --text: snow;
+    --dark-text: #e5e5e5;
+
+    --game-color-1: #0f0f0f;
+    --game-color-2: #151515;
+}
+
 * {
     padding: 0;
     margin: 0;
@@ -7,8 +18,8 @@
 }
 
 body {
-    background: #1a1a1a;
-    color: snow;
+    background: var(--background);
+    color: var(--text);
 }
 
 main {
@@ -33,26 +44,40 @@ h1 {
     font-size: 48px;
 }
 
+select {
+    background: var(--dark-background);
+    color: var(--dark-text);
+    padding: 6px 18px;
+    min-height: 33px;
+    font-weight: 600;
+    font-size: 16px;
+    border-radius: 4px;
+    text-align: left;
+    /* border: 2px solid var(--dark-background); */
+    /* box-shadow: 0px 0px 7px -2px black; */
+}
+
 .button {
     display: flex;
     flex-direction: row;
     gap: 0.5rem;
     align-items: center;
     justify-content: center;
-    background: #4a4a4a;
-    color: rgb(235, 235, 235);
+    background: var(--dark-background);
+    color: var(--dark-text);
     padding: 6px 18px;
     text-decoration: none;
+    font-size: 16px;
     font-weight: 600;
     border-radius: 4px;
-    box-shadow: 0px 0px 7px -2px black;
+    /* box-shadow: 0px 0px 7px -2px black; */
     transition: all 200ms ease;
 }
 
 .button:hover {
-    color: white;
-    background: #6a6a6a;
-    box-shadow: 0px 1px 12px 0px black;
+    color: var(--text);
+    background: var(--light-background);
+    box-shadow: 0px 1px 7px 0px black;
     transform: translateY(-4px);
 }
 
@@ -60,5 +85,26 @@ h1 {
     background: #04a071;
 }
 #play:hover {
-    background: #04c68c;
+    background: #0cb180;
+}
+
+.roundedBox {
+    background: var(--dark-background);
+    border-radius: 4px;
+    padding: 10px;
+}
+
+#game {
+    display: grid;
+    grid-template-columns: repeat(17, 1fr);
+}
+
+.game-cell {
+    width: 35px;
+    height: 35px;
+    background-color: var(--game-color-1);
+}
+
+.every-other {
+    background-color: var(--game-color-2);
 }
