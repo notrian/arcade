@@ -99,7 +99,9 @@ select {
 #game {
     display: grid;
     grid-template-columns: repeat(17, 1fr);
+    border: 2px solid transparent;
 }
+
 
 .game-cell {
     width: 35px;
