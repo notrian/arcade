@@ -27,6 +27,8 @@ const play = document.getElementById('play');
 const deadbox = document.getElementById('deadbox');
 const score = document.getElementById('score');
 const topscore = document.getElementById('topscore');
+const avgscore = document.getElementById('avgscore');
+let scores = [];
 
 // Start game when play pressed
 play.addEventListener('click', () => {
@@ -67,14 +69,16 @@ function createBoard() {
     }
 }
 
-
+// setup game for playing when user loads browser
 createBoard()
 let tickInterval = setInterval(tick, tickSpeed)
 endGame();
+scores = [];
 
 let appleColor = 'red';
 let snakeColor = 'white';
 
+// called whenever play is pressed
 function startGame() {
     createBoard();
 
@@ -98,24 +102,26 @@ function startGame() {
     tickInterval = setInterval(tick, tickSpeed);
 }
 
-function endGame() {
-    // udpate moving pixels
-    // snake.body.forEach(bodyPart => { 
-        //     let beforeCell = findCell(bodyPart);
-        //     if (beforeCell !== undefined) beforeCell.style.background = '';
-        // });
-        
-        if (parseInt(topscore.innerText) < parseInt(score.innerText)) {
-            topscore.innerText = score.innerText;
-        }
-        
-        gameState.gameStarted = false;
-        play.innerText = 'Play';
-        deadbox.style.display = 'block';
-        board.style.opacity = '0.3';
-        board.style.border = `2px solid ${document.documentElement.style.getPropertyValue('--game-color-2')}`;
-        
-        clearInterval(tickInterval);
+// called whenever snake dies
+function endGame() {   
+    scores.push(parseInt(score.innerText));
+    let totalScore = 0;
+    scores.forEach(scr => {
+        totalScore+=scr;
+    });
+    avgscore.innerText = Math.round(totalScore / scores.length);
+    
+    if (parseInt(topscore.innerText) < parseInt(score.innerText)) {
+        topscore.innerText = score.innerText;
+    }
+    
+    gameState.gameStarted = false;
+    play.innerText = 'Play';
+    deadbox.style.display = 'block';
+    board.style.opacity = '0.3';
+    board.style.border = `2px solid ${document.documentElement.style.getPropertyValue('--game-color-2')}`;
+    
+    clearInterval(tickInterval);
 }
 
 function tick() {
