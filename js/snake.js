@@ -1,6 +1,6 @@
 
 let snake = {
-    body: [ [9, 9]],
+    body: [ [9, 9], [9, 8]],
     direction: ''
 }
 let gameState = {
@@ -96,105 +96,37 @@ function tick() {
     
     // let snakeTail = snake.body[snake.body.length - 1];
     // if (snakeTail === snakeHead) snakeTail = undefined;
+    
     let snakeHead = snake.body[snake.body.length - 1];
 
-    if (snake.direction === 'up') snakeHead[1]--; 
-    if (snake.direction === 'down') snakeHead[1]++;
-    if (snake.direction === 'left') snakeHead[0]--;
-    if (snake.direction === 'right') snakeHead[0]++;
+    if (snakeHead[0] === gameState.apple[0] && snakeHead[1] === gameState.apple[1]) { 
+    }
+    else {
+        let snakeTail = snake.body.shift();
+        findCell(snakeTail).style.background = '';
+
+    }
+
+    let x = snakeHead[0], y = snakeHead[1];
+    if (snake.direction === 'up') y--; 
+    if (snake.direction === 'down') y++;
+    if (snake.direction === 'left') x--;
+    if (snake.direction === 'right') x++;
+
+    snake.body.push([x, y]);
+
+    findCell(gameState.apple).style.background = 'red';
     
-    snake.body.push(snakeHead);
-    snake.body.shift()
+    // if (snakeHead[0] === gameState.apple[0] && snakeHead[1] === gameState.apple[1]) {
+    //     snake.body.unshift([gameState.apple[0], gameState.apple[1]])
+    // }
     
     for (let i = 0; i < snake.body.length; i++) {
         let snakePart = snake.body[i];
         findCell(snakePart).style.background = 'white';
     }   
-
-    // if (snake.body.length > 1) {
-    // }
     
     console.log(snake.body)
-
-        /////////////////////////////////////////////
-
-    // for (let i = 0; i < snake.body.length; i++) {
-    //     let snakePart = snake.body[i];
-        
-    //     findCell(snakePart).style.background = '';
-
-    //     if (i === 0) {
-    //         if (snakePart === gameState.apple) {
-    //             console.log('d')
-    //             snakeHead = snakePart;
-    //         }
-    //     }
-        
-    //     if (snake.direction === 'up') snakePart[1]--; 
-    //     if (snake.direction === 'down') snakePart[1]++;
-    //     if (snake.direction === 'left') snakePart[0]--;
-    //     if (snake.direction === 'right') snakePart[0]++;
-        
-    //     if (i !== 0 && snakeHead === snakePart && snake.body.length > 1) return endGame();
-        
-    //     findCell(snakePart).style.background = 'white';
-    // }   
-    
-    // if (snakeHead[1] < 1 || snakeHead[1] > boardSize.height) return endGame();
-    // if (snakeHead[0] < 1 || snakeHead[0] > boardSize.width) return endGame();
-    
-    
-    // if (snakeHead && snakeHead[0] === gameState.apple[0] && snakeHead[1] === gameState.apple[1]) {
-    //     let newSnakePart = gameState.apple;
-    //     if (snake.direction === 'up') newSnakePart[1]--; 
-    //     if (snake.direction === 'down') newSnakePart[1]++;
-    //     if (snake.direction === 'left') newSnakePart[0]--;
-    //     if (snake.direction === 'right') newSnakePart[0]++;
-    //     snake.body.push(newSnakePart);
-    //     gameState.apple = [2,2];
-    // }
-
-    // findCell(gameState.apple).style.background = 'red';
-    
-    // oldSnakeHead = snakeHead;
-    /////////////////////////////////////////////
-    
-    // udpate moving pixels
-    // snake.body.forEach(bodyPart => { 
-        
-    //     if (bodyPart !== gameState.apple) {
-    //         let beforeCell = findCell(bodyPart);
-    //         if (beforeCell !== undefined) beforeCell.style.background = ''
-    //     }
-
-        
-    //     if (snake.direction === 'up') bodyPart[1]--; 
-    //     if (snake.direction === 'down') bodyPart[1]++;
-    //     if (snake.direction === 'left') bodyPart[0]--;
-    //     if (snake.direction === 'right') bodyPart[0]++;
-
-    //     if (snake.body[0] === bodyPart && interations) endGame();
-    //     if (bodyPart[0] < 1 || bodyPart[0] > boardSize.width) endGame();
-    //     if (bodyPart[1] < 1 || bodyPart[1] > boardSize.height) endGame();
-
-    //     if (gameState.gameStarted) {
-    //         let childCell = findCell(bodyPart);
-    //         childCell.style.background = 'white';
-    //     }
-
-    //     interations++;
-    // });
-
-    
-
-    // if (isOverApple) {
-    //     snake.body.push(gameState.apple)
-    //     gameState.apple = [1, 1]
-    //     console.log(snake.body)
-    // }
-    // else {
-    //     findCell(gameState.apple).style.background = 'red';
-    // }
 }
 
 function findCell(bodyPart) {
