@@ -33,26 +33,51 @@ main {
     text-align: center;
 }
 
+hr {
+    background: var(--dark-text);
+    height: 1px;
+    margin-top: 16px;
+    margin-bottom: 12px;
+}
+
 .row {
     display: flex;
     flex-direction: row;
     gap: 0.5rem;
-    align-items: center;
+    /* align-items: center; */
 }
 
 h1 {
     font-size: 48px;
 }
 
+h3 {
+    color: var(--dark-text);
+}
+
+p {
+    color: var(--dark-text);
+}
+
+input {
+    background: var(--dark-background);
+    color: var(--dark-text);
+    padding: 12px 18px;
+    font-size: 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    width: 80px;
+}
+
 select {
     cursor: pointer;
     background: var(--dark-background);
     color: var(--dark-text);
-    padding: 6px 18px;
+    padding: 12px 18px;
     min-height: 33px;
     font-weight: 600;
     font-size: 16px;
-    border-radius: 4px;
+    border-radius: 8px;
     text-align: left;
     /* border: 2px solid var(--dark-background); */
     /* box-shadow: 0px 0px 7px -2px black; */
@@ -67,11 +92,11 @@ select {
     justify-content: center;
     background: var(--dark-background);
     color: var(--dark-text);
-    padding: 6px 18px;
+    padding: 14px 18px;
     text-decoration: none;
     font-size: 16px;
     font-weight: 600;
-    border-radius: 4px;
+    border-radius: 8px;
     /* box-shadow: 0px 0px 7px -2px black; */
     transition: all 200ms ease;
 }
@@ -90,10 +115,46 @@ select {
     background: #0cb180;
 }
 
+#score {
+    padding: 4px 12px;
+    background: var(--dark-background);
+    border-radius: 4px;
+    color: white;
+}
+
+.bottom-bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
 .roundedBox {
     background: var(--dark-background);
     border-radius: 4px;
     padding: 10px;
+}
+
+.popupbg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 100vw;
+    min-height: 100vh;
+    background-color: rgba(0, 0, 0, 0.408);
+    z-index: 11;
+}
+
+.popup {
+    background: var(--dark-background);
+    border: solid 1px var(--dark-text);
+    box-shadow: 0px 0px 20px 0px black;
+    padding: 20px;
+    z-index: 12;
 }
 
 .game {
@@ -111,3 +172,4 @@ select {
 .every-other {
     background-color: var(--game-color-2);
 }
+

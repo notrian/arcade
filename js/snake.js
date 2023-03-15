@@ -13,22 +13,20 @@ let boardSize = {
     height: 19
 }
 
+// difficulty changer
+const difficulty = document.getElementById('difficulty');
+let tickSpeed = parseInt(difficulty.value);
+
+difficulty.addEventListener('change', (e) => {
+    tickSpeed = parseInt(difficulty.value);
+});
+
+
 const board = document.getElementById('game');
 const play = document.getElementById('play');
 const deadbox = document.getElementById('deadbox');
-
-setTimeout(() => {
-    board.style.gridTemplateColumns = `repeat(${boardSize.width}, 1fr)`;    
-}, 120);
-
-
-// create all cells according to size
-for (let i = 0; i < (boardSize.width*boardSize.height); i++) {
-    let newChild = document.createElement('div');
-    newChild.className = 'game-cell';
-    if (i % 2 !== 0) newChild.classList.add('every-other');
-    board.appendChild(newChild);
-}
+const score = document.getElementById('score');
+const topscore = document.getElementById('topscore');
 
 // Start game when play pressed
 play.addEventListener('click', () => {
@@ -50,18 +48,40 @@ document.addEventListener('keydown', (e) => {
     if (key === ' ' || key === 'enter') startGame();
     if (snake.direction.length) e.preventDefault();
     isTurning = false;
-    tick();
+    // tick();
 });
 
 
+function createBoard() {
+    boardSize.width = document.getElementById('width').value;
+    boardSize.height = document.getElementById('height').value;
+    board.style.gridTemplateColumns = `repeat(${boardSize.width}, 1fr)`;    
 
+    // create all cells according to size
+    if (board.childElementCount > 1) return;
+    for (let i = 0; i < (boardSize.width*boardSize.height); i++) {
+        let newChild = document.createElement('div');
+        newChild.className = 'game-cell';
+        if (i % 2 !== 0) newChild.classList.add('every-other');
+        board.appendChild(newChild);
+    }
+}
+
+
+createBoard()
+let tickInterval = setInterval(tick, tickSpeed)
 endGame();
 
-// setInterval(() => {
-//     if (gameState.gameStarted) tick();
-// }, 200);
+let appleColor = 'red';
+let snakeColor = 'white';
 
 function startGame() {
+    createBoard();
+
+    if (document.documentElement.style.getPropertyValue('--game-color-1') === '#B02A2A') appleColor = '#00cc00';
+    if (document.documentElement.style.getPropertyValue('--game-color-2') === '#cccccc') snakeColor = 'black';
+    resetApple();
+
     for (let i = 0; i < board.childNodes.length; i++) { 
         if (board.childNodes[i].style) board.childNodes[i].style.background = '';
     }
@@ -74,59 +94,78 @@ function startGame() {
     deadbox.style.display = 'none';
     board.style.opacity = '1';
     board.style.border = `2px solid ${document.documentElement.style.getPropertyValue('--background')}`;
+
+    tickInterval = setInterval(tick, tickSpeed);
 }
 
 function endGame() {
     // udpate moving pixels
-    snake.body.forEach(bodyPart => { 
-        let beforeCell = findCell(bodyPart);
-        if (beforeCell !== undefined) beforeCell.style.background = '';
-    });
-
-    gameState.gameStarted = false;
-    play.innerText = 'Play';
-    deadbox.style.display = 'block';
-    board.style.opacity = '0.3';
-    board.style.border = `2px solid ${document.documentElement.style.getPropertyValue('--game-color-2')}`;
+    // snake.body.forEach(bodyPart => { 
+        //     let beforeCell = findCell(bodyPart);
+        //     if (beforeCell !== undefined) beforeCell.style.background = '';
+        // });
+        
+        if (parseInt(topscore.innerText) < parseInt(score.innerText)) {
+            topscore.innerText = score.innerText;
+        }
+        
+        gameState.gameStarted = false;
+        play.innerText = 'Play';
+        deadbox.style.display = 'block';
+        board.style.opacity = '0.3';
+        board.style.border = `2px solid ${document.documentElement.style.getPropertyValue('--game-color-2')}`;
+        
+        clearInterval(tickInterval);
 }
 
 function tick() {
     
-    let isOverApple = false;
-    
-    // let snakeTail = snake.body[snake.body.length - 1];
-    // if (snakeTail === snakeHead) snakeTail = undefined;
-    
     let snakeHead = snake.body[snake.body.length - 1];
-
-    if (snakeHead[0] === gameState.apple[0] && snakeHead[1] === gameState.apple[1]) { 
-    }
+    
+    // if the snake is not on the apple, remove tail
+    if (snakeHead[0] === gameState.apple[0] && snakeHead[1] === gameState.apple[1]) { }
     else {
         let snakeTail = snake.body.shift();
         findCell(snakeTail).style.background = '';
-
     }
 
+    // updates position of new head
     let x = snakeHead[0], y = snakeHead[1];
     if (snake.direction === 'up') y--; 
     if (snake.direction === 'down') y++;
     if (snake.direction === 'left') x--;
     if (snake.direction === 'right') x++;
 
-    snake.body.push([x, y]);
-
-    findCell(gameState.apple).style.background = 'red';
+    if (x > boardSize.width || x < 1) return endGame(); // if goes off map
+    if (y > boardSize.height || y < 1) return endGame(); // if goes off map
+    if (snake.body.some(bodyPart => bodyPart[0] === x && bodyPart[1] === y)) return endGame(); // if body hits self
     
-    // if (snakeHead[0] === gameState.apple[0] && snakeHead[1] === gameState.apple[1]) {
-    //     snake.body.unshift([gameState.apple[0], gameState.apple[1]])
-    // }
+    snake.body.push([x, y]); // add the new head
     
+    // color in current apple
+    findCell(gameState.apple).style.background = appleColor;
+    
+    // if snake is over apple, reset it
+    if (snakeHead[0] === gameState.apple[0] && snakeHead[1] === gameState.apple[1]) {
+        resetApple();
+    }
+    
+    // draw all body parts
     for (let i = 0; i < snake.body.length; i++) {
         let snakePart = snake.body[i];
-        findCell(snakePart).style.background = 'white';
+        findCell(snakePart).style.background = snakeColor;
     }   
-    
-    console.log(snake.body)
+
+    // update score text to amount of body parts added
+    score.innerText = `${snake.body.length - 1}`;    
+}
+
+function resetApple() {
+    findCell(gameState.apple).style.background = '';
+    let randomX = Math.floor(Math.random() * boardSize.width) + 1;
+    let randomY = Math.floor(Math.random() * boardSize.height) + 1;
+    gameState.apple = [randomX, randomY];
+    findCell(gameState.apple).style.background = appleColor;
 }
 
 function findCell(bodyPart) {
