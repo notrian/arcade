@@ -20,8 +20,8 @@
     </div> -->
 
     <main>     
-        <div id="deadbox" style="display: block; position: absolute; left: 40.0%; top: 40%; z-index: 10;">
-            <h1>Game Over</h1><div style="height:20px;"></div>
+        <div id="deadbox">
+            <h1 id="endmessage">Game Over</h1><div style="height:20px;"></div>
             <a class="button" id="play"><i class="fa-solid fa-play"></i>Play</a>
         </div>
         <div>
@@ -34,27 +34,38 @@
 
         <div class="bottom-bar">
             <select name="theme" id="theme">
-                <option value="black">⬛</option>
-                <option value="white">⬜</option>
-                <option value="red">🟥</option>
-                <option value="orange">🟧</option>
-                <option value="yellow">🟨</option>
-                <option value="green">🟩</option>
-                <option value="blue">🟦</option>
-                <option value="purple">🟪</option>
-                <option value="brown">🟫</option>
+                <option selected value="black" disabled>Board Theme</option>
+                <option value="black">⬛ - Black</option>
+                <option value="white">⬜ - White</option>
+                <option value="red">🟥 - Red</option>
+                <option value="orange">🟧 - Orange</option>
+                <option value="yellow">🟨 - Yellow</option>
+                <option value="green">🟩 - Green</option>
+                <option value="blue">🟦 - Blue</option>
+                <option value="purple">🟪 - Purple</option>
+                <option value="brown">🟫 - Brown</option>
             </select>
-            <div></div><div></div><div></div>
+            <select name="snakecolor" id="snakecolor">
+                <option selected value="white" disabled>Snake Color</option>
+                <option value="black">⬛ - Black</option>
+                <option value="white">⬜ - White</option>
+                <option value="red">🟥 - Red</option>
+                <option value="orange">🟧 - Orange</option>
+                <option value="yellow">🟨 - Yellow</option>
+                <option value="green">🟩 - Green</option>
+                <option value="blue">🟦 - Blue</option>
+                <option value="purple">🟪 - Purple</option>
+                <option value="brown">🟫 - Brown</option>
+            </select>
             <select name="difficulty" id="difficulty">
+                <option selected value="150" disabled>Difficulty</option>
                 <option value="150">Easy</option>
                 <option value="115">Mid</option>
                 <option value="80">Hard</option>
                 <option value="50">God</option>
             </select>
-            <div></div><div></div><div></div>
-            <input type="number" name="width" id="width" placeholder="Width" value="17" min="9" max="99">
-            <div></div><div></div><div></div>
-            <input type="number" name="height" id="height" placeholder="Height" value="17" min="9" max="99">
+            <!-- <input type="number" name="width" id="width" placeholder="Width" value="" min="9" max="99">
+            <input type="number" name="height" id="height" placeholder="Height" value="" min="9" max="99"> -->
             <!-- <a class="button" id="settings"><i class="fa-solid fa-gear"></i></a> -->
         </div>
 

@@ -1,5 +1,7 @@
 const theme = document.getElementById('theme');
+const snakeselect = document.getElementById('snakecolor');
 theme.value = 'black';
+snakeselect.value = 'white';
 
 theme.addEventListener('change', (e) => {
     let color1 = theme.value;
@@ -29,4 +31,11 @@ theme.addEventListener('change', (e) => {
     
     document.documentElement.style.setProperty('--game-color-1', color1)
     document.documentElement.style.setProperty('--game-color-2', color2)
+});
+
+
+snakeselect.addEventListener('change', (e) => {
+    snakeColor = snakeselect.value;
+    if (snakeColor === 'red') appleColor = 'green'
+    else appleColor = 'red'
 });

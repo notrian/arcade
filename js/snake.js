@@ -55,8 +55,10 @@ document.addEventListener('keydown', (e) => {
 
 
 function createBoard() {
-    boardSize.width = document.getElementById('width').value;
-    boardSize.height = document.getElementById('height').value;
+    // i tried to make it editable but couldnt get it to work
+    boardSize.width = 19 // document.getElementById('width').value;
+    boardSize.height = 19 // document.getElementById('height').value;
+    if (boardSize.width)
     board.style.gridTemplateColumns = `repeat(${boardSize.width}, 1fr)`;    
 
     // create all cells according to size
@@ -70,20 +72,20 @@ function createBoard() {
 }
 
 // setup game for playing when user loads browser
-createBoard()
-let tickInterval = setInterval(tick, tickSpeed)
+let endMsg = document.getElementById('endmessage');
+let tickInterval = setInterval(tick, tickSpeed);
+createBoard();
 endGame();
+firstLoad();
 scores = [];
 
-let appleColor = 'red';
+
 let snakeColor = 'white';
+let appleColor = 'red';
 
 // called whenever play is pressed
 function startGame() {
     createBoard();
-
-    if (document.documentElement.style.getPropertyValue('--game-color-1') === '#B02A2A') appleColor = '#00cc00';
-    if (document.documentElement.style.getPropertyValue('--game-color-2') === '#cccccc') snakeColor = 'black';
     resetApple();
 
     for (let i = 0; i < board.childNodes.length; i++) { 
@@ -102,8 +104,13 @@ function startGame() {
     tickInterval = setInterval(tick, tickSpeed);
 }
 
+function firstLoad() {
+    endMsg.innerText = 'Click Play to Start';
+    play.innerText = 'Play'
+}
+
 // called whenever snake dies
-function endGame() {   
+function endGame() { 
     scores.push(parseInt(score.innerText));
     let totalScore = 0;
     scores.forEach(scr => {
@@ -116,8 +123,12 @@ function endGame() {
     }
     
     gameState.gameStarted = false;
-    play.innerText = 'Play';
-    deadbox.style.display = 'block';
+
+    let endMsgs = ['', 'You lost!', 'Try again?', 'Good try!', 'Game over', 'Haha, L'];
+    endMsg.innerHTML = endMsgs[getRandomNumber(5)];
+
+    play.innerText = 'Play Again';
+    deadbox.style.display = 'inline-flex';
     board.style.opacity = '0.3';
     board.style.border = `2px solid ${document.documentElement.style.getPropertyValue('--game-color-2')}`;
     
@@ -168,8 +179,8 @@ function tick() {
 
 function resetApple() {
     findCell(gameState.apple).style.background = '';
-    let randomX = Math.floor(Math.random() * boardSize.width) + 1;
-    let randomY = Math.floor(Math.random() * boardSize.height) + 1;
+    let randomX = getRandomNumber(boardSize.width);
+    let randomY = getRandomNumber(boardSize.height);
     gameState.apple = [randomX, randomY];
     findCell(gameState.apple).style.background = appleColor;
 }
@@ -179,4 +190,8 @@ function findCell(bodyPart) {
     let column = bodyPart[0];
     let row = bodyPart[1];
     return board.childNodes[(row * boardSize.width - boardSize.width) + column]
+}
+
+function getRandomNumber(upTo) {
+    return Math.floor(Math.random() * upTo) + 1;
 }
